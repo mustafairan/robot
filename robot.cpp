@@ -1,5 +1,13 @@
-//11290557
-//mustafa iran
+
+//###############################
+
+
+
+PLEASE DO NOT COPY WITHOUT PERMISSION
+
+
+
+//##############################
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -23,12 +31,12 @@ KONTROLER:
 
 	O :     kanca hareketi
 	o :     kanca hareketi
-	1 ardından + : ilk eklemden yukari hareket
-	1 ardından - : ilk eklemden asagi hareket
-	2 ardından + : ikinci eklemden yukari hareket
-	2 ardından - : ikinci eklemden asagi hareket
-	3 ardından + : tutucu saga/sola hareket
-	3 ardından - : tutucu saga/sola hareket
+	1 ardÃ½ndan + : ilk eklemden yukari hareket
+	1 ardÃ½ndan - : ilk eklemden asagi hareket
+	2 ardÃ½ndan + : ikinci eklemden yukari hareket
+	2 ardÃ½ndan - : ikinci eklemden asagi hareket
+	3 ardÃ½ndan + : tutucu saga/sola hareket
+	3 ardÃ½ndan - : tutucu saga/sola hareket
 
 #######################*/
 
@@ -83,7 +91,7 @@ void display_robot (void) //robotu cizen robot fonksiyon
 	glColor3f(0.0, 0.0, 1.0);
 
 	//glPushMatrix (); 
-	//// gövde
+	//// gÃ¶vde
 	glColor3f(1, 1,1 );
 	glRotatef((GLfloat) direction, 0.0, 1.0, 0.0);
 	glPushMatrix ();
@@ -287,22 +295,22 @@ void keyboard(unsigned char key, int x, int y){
 		break;
 
 	case 'w': case 'W'://ileri vites
-	    if(forward_backward<=370){  // terain sınır kontrol
+	    if(forward_backward<=370){  // terain sÃ½nÃ½r kontrol
 		forward_backward=forward_backward+7;}
 		break;
 
 	case 's': case 'S'://geri vites
-		if(forward_backward>=30){ // terain sınır kontrol
+		if(forward_backward>=30){ // terain sÃ½nÃ½r kontrol
 			forward_backward=forward_backward-7;}
 		break;
 
 	case 'd': case 'D'://saga kay
-		if(left_right<=290){  // terain sınır kontrol
+		if(left_right<=290){  // terain sÃ½nÃ½r kontrol
 		left_right=left_right+7;		}
 		break;
 	
 	case 'A': case 'a'://sola kay
-		if(left_right>=20){  // terain sınır kontrol
+		if(left_right>=20){  // terain sÃ½nÃ½r kontrol
 		left_right=left_right-7;
 		}
 		break;
