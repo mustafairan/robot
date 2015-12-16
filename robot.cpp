@@ -10,7 +10,7 @@ using namespace std;
 /*####################
 KONTROLER:
 esc:    cikis
-h :     topografik aydinlatma
+h :     topografik renklendirme
 q :     sola donus
 e :     saga donus
 w :     ileri hareket
