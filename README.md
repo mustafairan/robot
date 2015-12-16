@@ -1,4 +1,1 @@
-# robot
-
-
-please do not copy codes without permission
+This is a very basic graphics project example of that using opengl and c++.
