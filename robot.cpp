@@ -1,13 +1,5 @@
-
-//###############################
-
-
-
-PLEASE DO NOT COPY WITHOUT PERMISSION
-
-
-
-//##############################
+//11290557
+//mustafa iran
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -20,23 +12,24 @@ PLEASE DO NOT COPY WITHOUT PERMISSION
 using namespace std;
 /*####################
 KONTROLER:
-	esc:    cikis
-	h :     topografik aydinlatma
-	q :     sola donus
-	e :     saga donus
-	w :     ileri hareket
-	s :     geri hareket
-	a :     sola kaydirma
-	d :     saga kaydirma
+esc:    cikis
+h :     topografik aydinlatma
+q :     sola donus
+e :     saga donus
+w :     ileri hareket
+s :     geri hareket
+a :     sola kaydirma
+d :     saga kaydirma
 
-	O :     kanca hareketi
-	o :     kanca hareketi
-	1 ardýndan + : ilk eklemden yukari hareket
-	1 ardýndan - : ilk eklemden asagi hareket
-	2 ardýndan + : ikinci eklemden yukari hareket
-	2 ardýndan - : ikinci eklemden asagi hareket
-	3 ardýndan + : tutucu saga/sola hareket
-	3 ardýndan - : tutucu saga/sola hareket
+O :     kanca hareketi
+o :     kanca hareketi
+1 ardından + : ilk eklemden yukari hareket
+1 ardından - : ilk eklemden asagi hareket
+2 ardından + : ikinci eklemden yukari hareket
+2 ardından - : ikinci eklemden asagi hareket
+3 ardından + : tutucu saga/sola hareket
+3 ardından - : tutucu saga/sola hareket
+saga/sola imlec tuslar: sahneyi dondur
 
 #######################*/
 
@@ -67,6 +60,16 @@ int data[17][21]={//yukseklik verisi
 	{50,60,65,71,84,95,101,105,105,107,107,106,102,101,92,80,98,104,105,100,100},
 	{60,70,76,83,88,96,103,106,107,108,110,109,108,108,106,101,90,100,100,100,100}
 };
+
+void idle(void){ //calling this slows the rendering !
+	antenna = (antenna + 1);
+	if (antenna>=180) {antenna=0;}
+	//anten acisinin guncellenmesi
+
+	glutPostRedisplay();
+
+}
+
 
 void set_color(int height){ //yukseklige ve renklendirme tusuna gore renkleri ayarlayan fonk.
 	float colors[3]={1,1,1};
@@ -102,7 +105,7 @@ void display_robot (void) //robotu cizen robot fonksiyon
 	//tekerlekler
 	glPushMatrix();
 	glColor3f(0.2,0.3,0.4);
-	
+
 	glTranslatef(20,-15,10);
 	glutSolidTorus(4,8,10,25);
 
@@ -114,7 +117,7 @@ void display_robot (void) //robotu cizen robot fonksiyon
 
 	glTranslatef(37,0,0);
 	glutSolidTorus(4,8,10,25);
-	
+
 	glPopMatrix();
 
 	//antenin dik cubugu
@@ -164,7 +167,7 @@ void display_robot (void) //robotu cizen robot fonksiyon
 	glScalef(5, 10, 24);
 	glutSolidCube(1.0);
 	glPopMatrix();
-    
+
 	//sol kanca
 	glColor3f(.0, 1.0, 1.0);
 	glTranslatef(0, 0.0, 12);
@@ -228,35 +231,26 @@ void draw_triangles(){ //terraini cizen fonk.
 
 void display (void)
 {
-	/*glShadeModel (GL_SMOOTH);
-	glEnable (GL_LIGHTING);
-	GLfloat light_position[] = { 210, 200,420, 0,0,0};
-	glLoadIdentity(); glLoadIdentity();
-	//GLfloat light_position[] = {210, 120.0,170 , 1};
-	
+	//#############################
+	GLfloat mat_spec[] = {1.0, 1.0, 1.0, 1.0};
+	GLfloat mat_shiny[] = {50.0};              //parlaklik değeri
+	GLfloat light_pos[] = {0.0, 0.0, .0, 0.0}; //isik konumu
+	GLfloat white_light[] = {1.0, 1.0, 1.0, 1.0};
+
+
+	glShadeModel (GL_SMOOTH);
+	// glMaterialfv (GL_FRONT, GL_SPECULAR, mat_spec);
+	//glMaterialfv (GL_FRONT, GL_SHININESS, mat_shiny);
+	glLightfv (GL_LIGHT0, GL_POSITION, light_pos);
+	//glLightfv (GL_LIGHT0, GL_DIFFUSE, white_light);
+	// glLightfv (GL_LIGHT0, GL_SPECULAR, white_light);
+
+	GLfloat light_position[] = {420.0, 115.0, 340.0, 1.0};
 	glLightfv (GL_LIGHT0, GL_POSITION, light_position);
-	glColorMaterial(GL_FRONT,GL_DIFFUSE);
+	//glColorMaterial(GL_FRONT,GL_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable (GL_LIGHT0);
-	*/
-	//glutSwapBuffers();
-
-//#####################################
-	GLfloat pos[] = {210.0, 120.0, 170, 1.0};
-	glPushMatrix ();
-		  //glRotated ((GLdouble) direction, 1.0, 0.0, 0.0);
-		  glLightfv (GL_LIGHT0, GL_POSITION, pos);
-		  glColorMaterial(GL_FRONT,GL_DIFFUSE);
-	      glEnable(GL_COLOR_MATERIAL);
-		  //glTranslated (0.0, 0.0, 1.5);
-		  //glDisable (GL_LIGHTING);
-		  glColor3f (0.0, 1.0, 1.0);
-		  //glutSolidCube (0.1);
-		  glEnable (GL_LIGHTING);
-
-	  glPopMatrix ();
-
-//#####################################
+	//#####################################
 
 
 	glClear(GL_COLOR_BUFFER_BIT |GL_DEPTH_BUFFER_BIT );
@@ -279,67 +273,63 @@ void reshape (int w, int h)
 	gluPerspective (50.0, (GLfloat) w / (GLfloat) h, 100.0, -300);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
-	glTranslatef (0.0, 0.0, -5.0);
+	//glTranslatef (0.0, 0.0, -5.0);
 }
 
 void keyboard(unsigned char key, int x, int y){
-
-	
 
 	switch (key) {
 	case 27: //cikis icin esc
 		exit (EXIT_SUCCESS);
 		break;
+
 	case 'h': case 'H': //aydinlatma icin
 		is_colored=!is_colored;
 		break;
 
 	case 'w': case 'W'://ileri vites
-	    if(forward_backward<=370){  // terain sýnýr kontrol
-		forward_backward=forward_backward+7;}
+		if(forward_backward<=370){  // terain sınır kontrol
+			forward_backward=forward_backward+7;}
 		break;
 
 	case 's': case 'S'://geri vites
-		if(forward_backward>=30){ // terain sýnýr kontrol
+		if(forward_backward>=30){ // terain sınır kontrol
 			forward_backward=forward_backward-7;}
 		break;
 
 	case 'd': case 'D'://saga kay
-		if(left_right<=290){  // terain sýnýr kontrol
-		left_right=left_right+7;		}
+		if(left_right<=290){  // terain sınır kontrol
+			left_right=left_right+7;		}
 		break;
-	
+
 	case 'A': case 'a'://sola kay
-		if(left_right>=20){  // terain sýnýr kontrol
-		left_right=left_right-7;
-		}
+		if(left_right>=20){  // terain sınır kontrol
+			left_right=left_right-7;		}
 		break;
 
 	case 'o': 
 		printf(		"%d\n",hook);
 		if(hook>=-90){ // kanca kapatma
-		hook = (hook - 2) % 360;
-		}
+			hook = (hook - 2) % 360;		}
 		break;
-	case 'O'://kanca 
-		printf(		"%d\n",hook);
 
+	case 'O'://kanca 
 		if(hook<30){  //kanca acma
-		hook = (hook + 2) % 360; 
-		}
+			hook = (hook + 2) % 360; 		}
 		break;
-		
-		case '1': 
-			joint_choice='1'  ;
-			break;
-		case '2': 
-			joint_choice='2'  ;
-			break;
-		case '3': 
-			joint_choice='3'  ;
-			break;
-   
-	
+
+	case '1': 
+		joint_choice='1'  ;
+		break;
+
+	case '2': 
+		joint_choice='2'  ;
+		break;
+
+	case '3': 
+		joint_choice='3'  ;
+		break;
+
 	case 'q': case 'Q': //soluna don 
 		direction = (direction + 5) % 360;    
 		break;
@@ -347,39 +337,37 @@ void keyboard(unsigned char key, int x, int y){
 	case 'E': case 'e':          //sagina don
 		direction = (direction - 5) % 360;    
 		break;
+
 	case '+':
-				switch (joint_choice)
-				{// eklem hareketleri icin degisken guncellemeleri
-				case '1':
+		switch (joint_choice){// eklem hareketleri icin degisken guncellemeleri
+
+		case '1':
 			if(shoulder<100)
-			shoulder = (shoulder + 5) % 360; 
+				shoulder = (shoulder + 5) % 360; 
 			break;
 
-			case '2':
-			
+		case '2':
 			if(elbow<70){elbow = (elbow + 5) % 360;}
 			break;
 
-			case '3':
-		    
+		case '3':
 			wrist = (wrist + 5) % 360;
 			break;
 
-
-				}
-		
+		}
 		break;
+
 	case '-':
-		switch (joint_choice)// eklem hareketleri icin degisken guncellemeleri
-				{
+		switch (joint_choice){// eklem hareketleri icin degisken guncellemeleri
+
 		case '1':
-					if(shoulder>-50)
-			shoulder = (shoulder - 5) % 360;
-					break;
+			if(shoulder>-50)
+				shoulder = (shoulder - 5) % 360;
+			break;
+
 		case '2':
 			if(elbow>-60){
 				elbow = (elbow - 5) % 360;}
-
 			break;
 
 		case '3':
@@ -389,17 +377,17 @@ void keyboard(unsigned char key, int x, int y){
 		break;
 	}
 
-glutPostRedisplay();
+	glutPostRedisplay();
 
-	}
+}
 
 void special_keyboard(int key, int x, int y)
 {
-	if (key == GLUT_KEY_LEFT){ //sahnenin dondurulmesi (kamera konumunun degismesiyle) aci ayarlamasi
-		angle = angle + 2.0;
-	}
+	if (key == GLUT_KEY_LEFT)//sahnenin dondurulmesi (kamera konumunun degismesiyle) aci ayarlamasi
+	{ 		angle = angle + 1.0;	}
+
 	else if (key == GLUT_KEY_RIGHT)//sahnenin dondurulmesi (kamera konumunun degismesiyle) aci ayarlamasi
-	{angle = angle - 2.0;}
+	{angle = angle - 1.0;}
 
 	if (angle > 360.0) { 
 		angle = 0.0;}
@@ -408,38 +396,22 @@ void special_keyboard(int key, int x, int y)
 	glutPostRedisplay();
 }
 
-void idle(void){
-	antenna = (antenna + 1) % 360; //anten acisinin guncellenmesi
-	glutPostRedisplay();
-}
-
-void init (void)
-{
-  glClearColor (0.0, 0.0, 0.0, 0.0);
-  glShadeModel (GL_SMOOTH);
-  glEnable (GL_LIGHTING);
-  glEnable (GL_LIGHT0);
-  glEnable (GL_DEPTH_TEST);
-}
-
-
 
 int main(int argc, char **argv){
 
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA|GLUT_SINGLE|GLUT_DEPTH);     
+	glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH);     
 	glutInitWindowSize(1000,800);
 	glutInitWindowPosition(0,0);
 	glutCreateWindow(">>>>>mars merkez turluyo herkez<<<<<");
 	glMatrixMode (GL_PROJECTION);
 	glutDisplayFunc (display);
-	init();
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(special_keyboard);
 	glMatrixMode(GL_MODELVIEW);
 	glEnable (GL_DEPTH_TEST);
 	glutReshapeFunc (reshape);
-	//glutIdleFunc(idle);
+	glutIdleFunc(idle);
 	glutMainLoop();
 
 	return EXIT_SUCCESS;
